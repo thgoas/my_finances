@@ -3,5 +3,5 @@ import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
 import 'package:my_finances/layers/groups/domain/errors/failure_group.dart';
 
 abstract class GetAllGroupsRepository {
-  Future<Either<FailureGroup, GroupEntity>> call(String id);
+  Future<Either<FailureGroup, List<GroupEntity>>> call();
 }

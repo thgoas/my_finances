@@ -10,10 +10,7 @@ class GetAllGroupsUseCaseImp implements GetAllGroupsUseCase {
   GetAllGroupsUseCaseImp(this._repository);
 
   @override
-  Future<Either<FailureGroup, GroupEntity>> call(String id) async {
-    if (id.isEmpty) {
-      return Left(InvalidIdError('Invalid id'));
-    }
-    return _repository(id);
+  Future<Either<FailureGroup, List<GroupEntity>>> call() async {
+    return _repository();
   }
 }
