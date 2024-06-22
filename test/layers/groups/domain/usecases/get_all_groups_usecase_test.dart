@@ -12,11 +12,18 @@ class GetAllGroupsRepositoryMock extends Mock
 void main() {
   late GetAllGroupsRepositoryMock repository;
   late GetAllGroupsUseCaseImp usecase;
-  final testGroup = GroupEntity(
-      id: '1',
-      description: 'desc',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now());
+  final testGroup = [
+    GroupEntity(
+        id: '1',
+        description: 'desc',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now()),
+    GroupEntity(
+        id: '1',
+        description: 'desc',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now())
+  ];
   setUpAll(() {
     // Registre o comportamento esperado para argumentos não nulos
     registerFallbackValue('');
@@ -27,21 +34,13 @@ void main() {
   });
   group('group usecase tests', () {
     test('should return a group when the id is valid', () async {
-      when(() => repository('1')).thenAnswer(
+      when(() => repository()).thenAnswer(
         (_) async => Right(testGroup),
       );
-      final result = await usecase("1");
+      final result = await usecase();
 
       expect(result, isA<Right>());
       expect(result, Right(testGroup));
-    });
-    test('should return a failureGroup when there is a failure', () async {
-      when(() => repository(any())).thenAnswer(
-        (_) async => Left(InvalidIdError('Invalid error')),
-      );
-      final result = await usecase("1");
-      expect(result, isA<Left>());
-      expect(result.fold(id, id), isA<InvalidIdError>());
     });
   });
 }
