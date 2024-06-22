@@ -7,3 +7,7 @@ abstract class FailureGroup implements Exception {
 class InvalidIdError extends FailureGroup {
   InvalidIdError(super.message);
 }
+
+class InvalidDescriptionError extends FailureGroup {
+  InvalidDescriptionError(super.message);
+}
