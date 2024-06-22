@@ -33,7 +33,7 @@ void main() {
     usecase = GetAllGroupsUseCaseImp(repository);
   });
   group('group usecase tests', () {
-    test('should return a group when the id is valid', () async {
+    test('should return all groups', () async {
       when(() => repository()).thenAnswer(
         (_) async => Right(testGroup),
       );
