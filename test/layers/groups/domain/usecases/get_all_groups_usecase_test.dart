@@ -31,7 +31,7 @@ void main() {
     repository = GetAllGroupsRepositoryMock();
     usecase = GetAllGroupsUseCaseImp(repository);
   });
-  group('group usecase tests', () {
+  group('group get all usecase tests', () {
     test('should return all groups', () async {
       when(() => repository()).thenAnswer(
         (_) async => Right(testGroup),

@@ -26,7 +26,7 @@ void main() {
     repository = GetGroupByDescriptionRepositoryMock();
     usecase = GetGroupByDescriptionUseCaseImp(repository);
   });
-  group('group usecase tests', () {
+  group('group get by description usecase tests', () {
     test('should return a group when the desc is valid', () async {
       when(() => repository(any())).thenAnswer(
         (_) async => Right(testGroup),

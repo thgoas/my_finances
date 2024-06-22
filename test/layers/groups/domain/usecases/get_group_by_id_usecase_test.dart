@@ -26,7 +26,7 @@ void main() {
     repository = GetGroupByIdRepositoryMock();
     usecase = GetGroupByIdUseCaseImp(repository);
   });
-  group('group usecase tests', () {
+  group('group get by id usecase tests', () {
     test('should return a group when the id is valid', () async {
       when(() => repository(any())).thenAnswer(
         (_) async => Right(testGroup),
