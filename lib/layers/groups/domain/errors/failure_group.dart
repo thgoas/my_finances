@@ -11,3 +11,7 @@ class InvalidIdError extends FailureGroup {
 class InvalidDescriptionError extends FailureGroup {
   InvalidDescriptionError(super.message);
 }
+
+class InvalidFieldsError extends FailureGroup {
+  InvalidFieldsError(super.message);
+}
