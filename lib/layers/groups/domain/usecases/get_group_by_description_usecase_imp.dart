@@ -11,7 +11,7 @@ class GetGroupByDescriptionUseCaseImp implements GetGroupByDescriptionUseCase {
   @override
   Future<Either<FailureGroup, GroupEntity>> call(String description) async {
     if (description.isEmpty) {
-      return Left(InvalidIdError('Invalid id'));
+      return Left(InvalidDescriptionError('Invalid Description'));
     }
     return _repository(description);
   }
