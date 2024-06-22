@@ -2,11 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
 import 'package:my_finances/layers/groups/domain/errors/failure_group.dart';
-import 'package:my_finances/layers/groups/domain/repositories/get_all_groups_repository.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:my_finances/layers/groups/domain/repositories/get_groups_by_id_repository.dart';
-import 'package:my_finances/layers/groups/domain/usecases/get_all_groups_usecase_imp.dart';
-import 'package:my_finances/layers/groups/domain/usecases/get_group_by_id_usecase.dart';
 import 'package:my_finances/layers/groups/domain/usecases/get_group_by_id_usecase_imp.dart';
 
 class GetGroupByIdRepositoryMock extends Mock
