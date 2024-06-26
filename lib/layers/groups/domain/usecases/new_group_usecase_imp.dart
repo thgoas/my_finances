@@ -13,8 +13,8 @@ class NewGroupUseCaseImp implements NewGroupUseCase {
   Future<Either<FailureGroup, GroupEntity>> call(
       GroupEntity groupEntity) async {
     if (groupEntity.id.isEmpty || groupEntity.description.isEmpty) {
-      return Left(InvalidFieldsError('id and description can not Empty'));
+      return Left(InvalidFieldsError('id or description can not Empty'));
     }
-    return await _repository(groupEntity);
+    return _repository(groupEntity);
   }
 }
