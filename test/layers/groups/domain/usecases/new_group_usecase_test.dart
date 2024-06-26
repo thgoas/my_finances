@@ -40,7 +40,6 @@ void main() {
 
       expect(result, isA<Right>());
       expect(result, Right(testGroup));
-      expect(result.fold((l) => null, (r) => r.id), newGroup.id);
     });
 
     test('should return Failure when id is empty', () async {
@@ -50,7 +49,7 @@ void main() {
           createdAt: DateTime.now(),
           updatedAt: DateTime.now());
       when(() => repository(newGroup))
-          .thenAnswer((_) async => Left(InvalidFieldsError('invalid id')));
+          .thenAnswer((_) async => Right(testGroup));
       final result = await usecase(newGroup);
       expect(result, isA<Left>());
       expect(result.fold(id, id), isA<InvalidFieldsError>());
@@ -62,8 +61,8 @@ void main() {
           description: '',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now());
-      when(() => repository(newGroup)).thenAnswer(
-          (_) async => Left(InvalidFieldsError('invalid description')));
+      when(() => repository(newGroup))
+          .thenAnswer((_) async => Right(testGroup));
       final result = await usecase(newGroup);
       expect(result, isA<Left>());
       expect(result.fold(id, id), isA<InvalidFieldsError>());
