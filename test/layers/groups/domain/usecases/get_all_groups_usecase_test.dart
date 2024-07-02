@@ -1,15 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
-import 'package:my_finances/layers/groups/domain/repositories/get_all_groups_repository.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:my_finances/layers/groups/domain/repositories/group_repository.dart';
 import 'package:my_finances/layers/groups/domain/usecases/get_all_groups_usecase_imp.dart';
 
-class GetAllGroupsRepositoryMock extends Mock
-    implements GetAllGroupsRepository {}
+class GroupRepositoryMock extends Mock implements GroupRepository {}
 
 void main() {
-  late GetAllGroupsRepositoryMock repository;
+  late GroupRepositoryMock repository;
   late GetAllGroupsUseCaseImp usecase;
   final testGroup = [
     GroupEntity(
@@ -28,12 +27,12 @@ void main() {
     registerFallbackValue('');
   });
   setUp(() {
-    repository = GetAllGroupsRepositoryMock();
+    repository = GroupRepositoryMock();
     usecase = GetAllGroupsUseCaseImp(repository);
   });
   group('group get all usecase tests', () {
     test('should return all groups', () async {
-      when(() => repository()).thenAnswer(
+      when(() => repository.findAll()).thenAnswer(
         (_) async => Right(testGroup),
       );
       final result = await usecase();

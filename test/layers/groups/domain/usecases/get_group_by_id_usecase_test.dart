@@ -3,14 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
 import 'package:my_finances/layers/groups/domain/errors/failure_group.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:my_finances/layers/groups/domain/repositories/get_groups_by_id_repository.dart';
+import 'package:my_finances/layers/groups/domain/repositories/group_repository.dart';
 import 'package:my_finances/layers/groups/domain/usecases/get_group_by_id_usecase_imp.dart';
 
-class GetGroupByIdRepositoryMock extends Mock
-    implements GetGroupsByIdRepository {}
+class GroupRepositoryMock extends Mock implements GroupRepository {}
 
 void main() {
-  late GetGroupByIdRepositoryMock repository;
+  late GroupRepositoryMock repository;
   late GetGroupByIdUseCaseImp usecase;
   final testGroup = GroupEntity(
       id: '1',
@@ -23,12 +22,12 @@ void main() {
     registerFallbackValue('');
   });
   setUp(() {
-    repository = GetGroupByIdRepositoryMock();
+    repository = GroupRepositoryMock();
     usecase = GetGroupByIdUseCaseImp(repository);
   });
   group('group get by id usecase tests', () {
     test('should return a group when the id is valid', () async {
-      when(() => repository(any())).thenAnswer(
+      when(() => repository.findById(any())).thenAnswer(
         (_) async => Right(testGroup),
       );
       final result = await usecase('1');
@@ -37,7 +36,7 @@ void main() {
       expect(result, Right(testGroup));
     });
     test('should return a failureGroup when there is a failure', () async {
-      when(() => repository(any())).thenAnswer(
+      when(() => repository.findById(any())).thenAnswer(
         (_) async => Left(InvalidIdError('Invalid error')),
       );
       final result = await usecase('');

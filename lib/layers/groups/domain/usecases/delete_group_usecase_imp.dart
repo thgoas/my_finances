@@ -3,11 +3,11 @@ import 'package:dartz/dartz.dart';
 
 import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
 import 'package:my_finances/layers/groups/domain/errors/failure_group.dart';
-import 'package:my_finances/layers/groups/domain/repositories/delete_group_repository.dart';
+import 'package:my_finances/layers/groups/domain/repositories/group_repository.dart';
 import 'package:my_finances/layers/groups/domain/usecases/delete_group_usecase.dart';
 
 class DeleteGroupUseCaseImp implements DeleteGroupUseCase {
-  final DeleteGroupRepository _repository;
+  final GroupRepository _repository;
   DeleteGroupUseCaseImp(
     this._repository,
   );
@@ -16,6 +16,6 @@ class DeleteGroupUseCaseImp implements DeleteGroupUseCase {
     if (id.isEmpty) {
       return Left(InvalidIdError('Id can not empty'));
     }
-    return _repository(id);
+    return _repository.remove(id);
   }
 }

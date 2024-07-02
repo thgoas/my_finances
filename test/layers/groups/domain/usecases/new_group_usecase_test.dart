@@ -3,14 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
 import 'package:my_finances/layers/groups/domain/errors/failure_group.dart';
-import 'package:my_finances/layers/groups/domain/repositories/new_group_repository.dart';
+import 'package:my_finances/layers/groups/domain/repositories/group_repository.dart';
 import 'package:my_finances/layers/groups/domain/usecases/new_group_usecase.dart';
 import 'package:my_finances/layers/groups/domain/usecases/new_group_usecase_imp.dart';
 
-class NewGroupRepositoryMock extends Mock implements NewGroupRepository {}
+class GroupRepositoryMock extends Mock implements GroupRepository {}
 
 void main() {
-  late NewGroupRepositoryMock repository;
+  late GroupRepositoryMock repository;
   late NewGroupUseCase usecase;
   final testGroup = GroupEntity(
       id: '1',
@@ -23,7 +23,7 @@ void main() {
     registerFallbackValue('');
   });
   setUp(() {
-    repository = NewGroupRepositoryMock();
+    repository = GroupRepositoryMock();
     usecase = NewGroupUseCaseImp(repository);
   });
   group('create a new group tests', () {
@@ -33,7 +33,7 @@ void main() {
           description: 'desc',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now());
-      when(() => repository(newGroup)).thenAnswer(
+      when(() => repository.save(newGroup)).thenAnswer(
         (_) async => Right(testGroup),
       );
       final result = await usecase(newGroup);
@@ -48,7 +48,7 @@ void main() {
           description: 'desc',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now());
-      when(() => repository(newGroup))
+      when(() => repository.save(newGroup))
           .thenAnswer((_) async => Right(testGroup));
       final result = await usecase(newGroup);
       expect(result, isA<Left>());
@@ -61,7 +61,7 @@ void main() {
           description: '',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now());
-      when(() => repository(newGroup))
+      when(() => repository.save(newGroup))
           .thenAnswer((_) async => Right(testGroup));
       final result = await usecase(newGroup);
       expect(result, isA<Left>());

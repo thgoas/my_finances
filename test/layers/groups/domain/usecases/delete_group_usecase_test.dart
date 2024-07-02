@@ -3,15 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
 import 'package:my_finances/layers/groups/domain/errors/failure_group.dart';
-import 'package:my_finances/layers/groups/domain/repositories/delete_group_repository.dart';
+import 'package:my_finances/layers/groups/domain/repositories/group_repository.dart';
 import 'package:my_finances/layers/groups/domain/usecases/delete_group_usecase.dart';
 import 'package:my_finances/layers/groups/domain/usecases/delete_group_usecase_imp.dart';
 import 'package:my_finances/layers/groups/domain/usecases/update_group_usecase.dart';
 
-class DeleteGroupRepositoryMock extends Mock implements DeleteGroupRepository {}
+class GroupRepositoryMock extends Mock implements GroupRepository {}
 
 main() {
-  late DeleteGroupRepositoryMock repository;
+  late GroupRepositoryMock repository;
   late DeleteGroupUseCase usecase;
   final testGroup = GroupEntity(
       id: '1',
@@ -24,7 +24,7 @@ main() {
     registerFallbackValue('');
   });
   setUp(() {
-    repository = DeleteGroupRepositoryMock();
+    repository = GroupRepositoryMock();
     usecase = DeleteGroupUseCaseImp(repository);
   });
 
@@ -32,7 +32,8 @@ main() {
     test('should return success when delete group', () async {
       final id = '1';
 
-      when(() => repository(id)).thenAnswer((_) async => Right(testGroup));
+      when(() => repository.remove(id))
+          .thenAnswer((_) async => Right(testGroup));
       final result = await usecase(id);
 
       expect(result, isA<Right>());
@@ -41,7 +42,8 @@ main() {
     test('should return exception with id is empty', () async {
       final idInput = '';
 
-      when(() => repository(idInput)).thenAnswer((_) async => Right(testGroup));
+      when(() => repository.remove(idInput))
+          .thenAnswer((_) async => Right(testGroup));
       final result = await usecase(idInput);
 
       expect(result, isA<Left>());

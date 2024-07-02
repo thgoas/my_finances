@@ -6,7 +6,7 @@ import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
 
 main() {
   // late GetOneGroupDataSourceMock getOneGroupDataSource;
-  late NewGroupRepositoryImp repository;
+  late GroupRepositoryImp repository;
   // final resultGroup = GroupDto(id: '1', description: 'desc', type: 'type');
   setUpAll(() {
     // Registre o comportamento esperado para argumentos não nulos
@@ -14,7 +14,7 @@ main() {
   });
   setUp(() {
     // getOneGroupDataSource = GetOneGroupDataSourceMock();
-    repository = NewGroupRepositoryImp();
+    repository = GroupRepositoryImp();
   });
   group('New group repository', () {
     test('should return a new group', () async {
@@ -23,7 +23,7 @@ main() {
           description: 'desc',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now());
-      final result = await repository(newgroup);
+      final result = await repository.save(newgroup);
       expect(result, isA<Right>());
       expect(result, Right(newgroup));
     });

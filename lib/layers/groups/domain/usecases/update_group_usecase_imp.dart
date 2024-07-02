@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
 import 'package:my_finances/layers/groups/domain/errors/failure_group.dart';
-import 'package:my_finances/layers/groups/domain/repositories/update_group_repository.dart';
+import 'package:my_finances/layers/groups/domain/repositories/group_repository.dart';
 import 'package:my_finances/layers/groups/domain/usecases/update_group_usecase.dart';
 
 class UpdateGroupUseCaseImp implements UpdateGroupUseCase {
-  final UpdateGroupRepository _repository;
+  final GroupRepository _repository;
 
   UpdateGroupUseCaseImp(this._repository);
   @override
@@ -17,6 +17,6 @@ class UpdateGroupUseCaseImp implements UpdateGroupUseCase {
       return Left(InvalidDescriptionError('description can not empty'));
     }
 
-    return _repository(id, groupEntity);
+    return _repository.update(id, groupEntity);
   }
 }
