@@ -26,7 +26,7 @@ main() {
     groupDataSource = GroupDataSourceMock();
     repository = GroupRepositoryImp(groupDataSource);
   });
-  group('group repository', () {
+  group('find all group repository', () {
     test('should return all groups', () async {
       when(() => groupDataSource.findAll())
           .thenAnswer((_) async => resultGroup);
@@ -47,6 +47,32 @@ main() {
       when(() => groupDataSource.findAll())
           .thenThrow(Exception('Data source error'));
       final result = await repository.findAll();
+
+      expect(result, isA<Left>());
+      expect(result.fold(id, id), isA<DataSourceException>());
+    });
+  });
+
+  group('find by ID group repository', () {
+    test('should return a group by id', () async {
+      when(() => groupDataSource.findById(any()))
+          .thenAnswer((_) async => resultGroup[0]);
+      final result = await repository.findById('1');
+
+      expect(result, isA<Right>());
+      expect(result, Right(resultGroup[0]));
+    });
+    test('should return NoElementDataSourceError', () async {
+      when(() => groupDataSource.findById(any())).thenAnswer((_) async => null);
+      final result = await repository.findById('1');
+
+      expect(result, isA<Left>());
+      expect(result.fold(id, id), isA<NoElementDataSourceError>());
+    });
+
+    test('should return DataSourceException', () async {
+      when(() => groupDataSource.findById(any())).thenThrow(Exception());
+      final result = await repository.findById('1');
 
       expect(result, isA<Left>());
       expect(result.fold(id, id), isA<DataSourceException>());
