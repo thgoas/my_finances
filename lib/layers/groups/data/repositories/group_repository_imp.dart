@@ -8,7 +8,7 @@ import 'package:my_finances/layers/groups/domain/usecases/update_group_usecase.d
 
 class GroupRepositoryImp implements GroupRepository {
   final GroupDataSource groupDataSource;
-  GroupRepositoryImp(this.groupDataSource) {}
+  GroupRepositoryImp(this.groupDataSource);
   @override
   Future<Either<FailureGroup, List<GroupEntity>>> findAll() async {
     try {
@@ -17,9 +17,8 @@ class GroupRepositoryImp implements GroupRepository {
         return Left(NoElementDataSourceError('No data found'));
       }
       return Right(result);
-    } catch (err) {
-      print(err);
-      return Left(NoElementDataSourceError(err.toString()));
+    } catch (e) {
+      return Left(DataSourceException(e.toString()));
     }
   }
 

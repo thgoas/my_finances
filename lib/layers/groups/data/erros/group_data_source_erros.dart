@@ -4,6 +4,6 @@ class NoElementDataSourceError extends FailureGroup {
   NoElementDataSourceError(super.message);
 }
 
-class EmptyResultException extends FailureGroup {
-  EmptyResultException(super.message);
+class DataSourceException extends FailureGroup {
+  DataSourceException(super.message);
 }
