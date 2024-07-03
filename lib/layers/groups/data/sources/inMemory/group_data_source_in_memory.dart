@@ -1,5 +1,7 @@
 import 'package:my_finances/layers/groups/data/dtos/group_dto.dart';
 import 'package:my_finances/layers/groups/data/sources/group_data_source.dart';
+import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
+import 'package:my_finances/layers/groups/domain/usecases/update_group_usecase.dart';
 
 class GroupDataSourceInMemory implements GroupDataSource {
   @override
@@ -26,13 +28,13 @@ class GroupDataSourceInMemory implements GroupDataSource {
   }
 
   @override
-  Future<GroupDto> save(GroupDto groupDto) {
+  Future<GroupDto> save(GroupEntity groupDto) {
     // TODO: implement save
     throw UnimplementedError();
   }
 
   @override
-  Future<GroupDto> update(String id, GroupDto groupDto) {
+  Future<GroupDto> update(String id, GroupEntityInput groupDto) {
     // TODO: implement update
     throw UnimplementedError();
   }
