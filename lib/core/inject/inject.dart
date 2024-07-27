@@ -15,14 +15,18 @@ import 'package:my_finances/layers/groups/domain/usecases/new_group_usecase.dart
 import 'package:my_finances/layers/groups/domain/usecases/new_group_usecase_imp.dart';
 import 'package:my_finances/layers/groups/domain/usecases/update_group_usecase.dart';
 import 'package:my_finances/layers/groups/domain/usecases/update_group_usecase_imp.dart';
+import 'package:my_finances/layers/groups/presentation/controller/group_controller.dart';
 
 class Inject {
   static void init() {
     GetIt getIt = GetIt.instance;
+    //data sources
     getIt.registerLazySingleton<GroupDataSource>(
         () => GroupDataSourceInMemory());
+    //repository
     getIt.registerLazySingleton<GroupRepository>(
         () => GroupRepositoryImp(getIt()));
+    //use cases
     getIt.registerLazySingleton<NewGroupUseCase>(
         () => NewGroupUseCaseImp(getIt()));
     getIt.registerLazySingleton<UpdateGroupUseCase>(
@@ -35,5 +39,7 @@ class Inject {
         () => GetGroupByIdUseCaseImp(getIt()));
     getIt.registerLazySingleton<DeleteGroupUseCase>(
         () => DeleteGroupUseCaseImp(getIt()));
+
+    getIt.registerFactory<GroupController>(() => GroupController(getIt()));
   }
 }
