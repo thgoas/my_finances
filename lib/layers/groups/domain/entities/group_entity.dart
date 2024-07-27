@@ -1,8 +1,8 @@
 class GroupEntity {
   final String id;
   final String description;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   GroupEntity(
       {required this.id,
