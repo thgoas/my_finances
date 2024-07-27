@@ -13,8 +13,8 @@ class GroupDto extends GroupEntity {
     return <String, dynamic>{
       'id': id,
       'description': description,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
     };
   }
 
@@ -22,8 +22,12 @@ class GroupDto extends GroupEntity {
     return GroupDto(
       id: map['id'] as String,
       description: map['description'] as String,
-      createdAt: DateTime.parse(map['createdAt'] as String),
-      updatedAt: DateTime.parse(map['updatedAt'] as String),
+      createdAt: map['createdAt'] == null
+          ? null
+          : DateTime.parse(map['createdAt'] as String),
+      updatedAt: map['updatedAt'] == null
+          ? null
+          : DateTime.parse(map['updatedAt'] as String),
     );
   }
 
