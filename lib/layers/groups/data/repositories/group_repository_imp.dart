@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:my_finances/layers/groups/data/dtos/group_dto.dart';
-import 'package:my_finances/layers/groups/data/erros/group_data_source_erros.dart';
+import 'package:my_finances/layers/groups/data/errors/group_data_source_erros.dart';
 import 'package:my_finances/layers/groups/data/sources/group_data_source.dart';
 import 'package:my_finances/layers/groups/domain/entities/group_entity.dart';
 import 'package:my_finances/layers/groups/domain/errors/failure_group.dart';
@@ -19,6 +19,7 @@ class GroupRepositoryImp implements GroupRepository {
       }
       return Right(result);
     } catch (e) {
+      print('repository ${e}');
       return Left(DataSourceException(e.toString()));
     }
   }
@@ -84,10 +85,12 @@ class GroupRepositoryImp implements GroupRepository {
 
   @override
   Future<Either<FailureGroup, GroupEntity>> update(
-      String id, GroupEntityInput groupEntity) async {
+      String id, GroupEntity groupEntity) async {
     try {
       final result = await _groupDataSource.update(id, groupEntity);
-
+      if (result == null) {
+        return Left(NoElementDataSourceError('No data found'));
+      }
       return Right(result);
     } catch (e) {
       return Left(DataSourceException(e.toString()));

@@ -6,7 +6,7 @@ import 'package:my_finances/layers/groups/domain/usecases/update_group_usecase.d
 abstract class GroupRepository {
   Future<Either<FailureGroup, GroupEntity>> save(GroupEntity groupEntity);
   Future<Either<FailureGroup, GroupEntity>> update(
-      String id, GroupEntityInput groupEntity);
+      String id, GroupEntity groupEntity);
   Future<Either<FailureGroup, GroupEntity>> findById(String id);
   Future<Either<FailureGroup, GroupEntity>> findByDescription(
       String description);
