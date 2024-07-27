@@ -6,7 +6,6 @@ import 'package:my_finances/layers/groups/domain/errors/failure_group.dart';
 import 'package:my_finances/layers/groups/domain/repositories/group_repository.dart';
 import 'package:my_finances/layers/groups/domain/usecases/delete_group_usecase.dart';
 import 'package:my_finances/layers/groups/domain/usecases/delete_group_usecase_imp.dart';
-import 'package:my_finances/layers/groups/domain/usecases/update_group_usecase.dart';
 
 class GroupRepositoryMock extends Mock implements GroupRepository {}
 

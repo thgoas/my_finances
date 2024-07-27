@@ -15,12 +15,11 @@ main() {
   final testGroup = GroupEntity(
       id: '1',
       description: 'desc edit',
-      createdAt: DateTime.now(),
+      createdAt: null,
       updatedAt: DateTime.now());
 
   setUpAll(() {
-    // Registre o comportamento esperado para argumentos não nulos
-    registerFallbackValue('');
+    registerFallbackValue(testGroup);
   });
   setUp(() {
     repository = GroupRepositoryMock();
@@ -29,35 +28,33 @@ main() {
 
   group('Update group use case', () {
     test('should return group edited with success', () async {
-      final id = '1';
-      final groupEdit =
-          GroupEntityInput(description: 'desc edit', updatedAt: DateTime.now());
-      when(() => repository.update(id, groupEdit))
+      const idInput = '1';
+      const description = 'desc edit';
+
+      when(() => repository.update(any(), any()))
           .thenAnswer((_) async => Right(testGroup));
-      final result = await usecase(id, groupEdit);
+
+      final result = await usecase(idInput, description);
 
       expect(result, isA<Right>());
       expect(result, Right(testGroup));
     });
     test('should return exception with id is empty', () async {
       final idInput = '';
-      final groupEdit =
-          GroupEntityInput(description: 'desc edit', updatedAt: DateTime.now());
-      when(() => repository.update(idInput, groupEdit))
+      final description = 'desc edit';
+      when(() => repository.update(any(), any()))
           .thenAnswer((_) async => Right(testGroup));
-      final result = await usecase(idInput, groupEdit);
-
+      final result = await usecase(idInput, description);
       expect(result, isA<Left>());
       expect(result.fold(id, id), isA<InvalidIdError>());
     });
 
     test('should return exception with description is empty', () async {
       final idInput = '1';
-      final groupEdit =
-          GroupEntityInput(description: '', updatedAt: DateTime.now());
-      when(() => repository.update(idInput, groupEdit))
+      final description = '';
+      when(() => repository.update(any(), any()))
           .thenAnswer((_) async => Right(testGroup));
-      final result = await usecase(idInput, groupEdit);
+      final result = await usecase(idInput, description);
 
       expect(result, isA<Left>());
       expect(result.fold(id, id), isA<InvalidDescriptionError>());

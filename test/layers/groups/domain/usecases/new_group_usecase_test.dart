@@ -13,14 +13,11 @@ void main() {
   late GroupRepositoryMock repository;
   late NewGroupUseCase usecase;
   final testGroup = GroupEntity(
-      id: '1',
-      description: 'desc',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now());
+      id: '1', description: 'desc', createdAt: DateTime.now(), updatedAt: null);
 
   setUpAll(() {
     // Registre o comportamento esperado para argumentos não nulos
-    registerFallbackValue('');
+    registerFallbackValue(testGroup);
   });
   setUp(() {
     repository = GroupRepositoryMock();
@@ -28,42 +25,22 @@ void main() {
   });
   group('create a new group tests', () {
     test('should create a new group and returned', () async {
-      final newGroup = GroupEntity(
-          id: '1',
-          description: 'desc',
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now());
-      when(() => repository.save(newGroup)).thenAnswer(
+      const description = 'desc';
+      when(() => repository.save(any())).thenAnswer(
         (_) async => Right(testGroup),
       );
-      final result = await usecase(newGroup);
+
+      final result = await usecase(description);
 
       expect(result, isA<Right>());
       expect(result, Right(testGroup));
     });
 
-    test('should return Failure when id is empty', () async {
-      final newGroup = GroupEntity(
-          id: '',
-          description: 'desc',
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now());
-      when(() => repository.save(newGroup))
-          .thenAnswer((_) async => Right(testGroup));
-      final result = await usecase(newGroup);
-      expect(result, isA<Left>());
-      expect(result.fold(id, id), isA<InvalidFieldsError>());
-    });
-
     test('should return Failure when description is empty', () async {
-      final newGroup = GroupEntity(
-          id: '1',
-          description: '',
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now());
-      when(() => repository.save(newGroup))
+      const description = '';
+      when(() => repository.save(testGroup))
           .thenAnswer((_) async => Right(testGroup));
-      final result = await usecase(newGroup);
+      final result = await usecase(description);
       expect(result, isA<Left>());
       expect(result.fold(id, id), isA<InvalidFieldsError>());
     });

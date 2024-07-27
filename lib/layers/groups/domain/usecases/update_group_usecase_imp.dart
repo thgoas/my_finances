@@ -10,13 +10,18 @@ class UpdateGroupUseCaseImp implements UpdateGroupUseCase {
   UpdateGroupUseCaseImp(this._repository);
   @override
   Future<Either<FailureGroup, GroupEntity>> call(
-      String id, GroupEntityInput groupEntity) async {
+      String id, String description) async {
     if (id.isEmpty) {
-      return Left(InvalidIdError('id can not empty'));
-    } else if (groupEntity.description.isEmpty) {
+      return Left(InvalidIdError('Id can not empty'));
+    } else if (description.isEmpty) {
       return Left(InvalidDescriptionError('description can not empty'));
     }
+    final group = GroupEntity(
+        id: id,
+        description: description,
+        createdAt: null,
+        updatedAt: DateTime.now());
 
-    return _repository.update(id, groupEntity);
+    return _repository.update(id, group);
   }
 }
