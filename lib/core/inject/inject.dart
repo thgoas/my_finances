@@ -40,6 +40,7 @@ class Inject {
     getIt.registerLazySingleton<DeleteGroupUseCase>(
         () => DeleteGroupUseCaseImp(getIt()));
 
-    getIt.registerFactory<GroupController>(() => GroupController(getIt()));
+    getIt.registerFactory<GroupController>(() =>
+        GroupController(getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));
   }
 }

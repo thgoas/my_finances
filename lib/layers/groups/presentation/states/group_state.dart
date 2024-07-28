@@ -7,9 +7,9 @@ class GroupPageLoadingState extends GroupPageState {}
 class GroupPageStartState extends GroupPageState {}
 
 class GroupPageSuccessfulState extends GroupPageState {
-  final GroupEntity groupEntity;
+  final List<GroupEntity> groups;
 
-  GroupPageSuccessfulState(this.groupEntity);
+  GroupPageSuccessfulState(this.groups);
 }
 
 class GroupPageErrorState extends GroupPageState {
