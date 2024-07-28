@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_finances/core/inject/inject.dart';
+import 'package:my_finances/layers/groups/presentation/pages/groups_page.dart';
 
 void main() {
+  Inject.init();
   runApp(const MyApp());
 }
 
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const GroupsPage(),
     );
   }
 }
